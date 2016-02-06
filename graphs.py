@@ -42,7 +42,15 @@ def measureRhythmicDissonance(flatStream, timeSigs):
             tempMeasureList.append(element)
         else:
             currentMeasure = element.measureNumber
+            # figure out the rhythmic dissonance for the previous measure
+            for i in tempMeasureList:
+                noteRhythmicDissonance(i, timeSigs)
+            # get the next measure started
 
     heresAlist = []
     return heresAlist
     # return list of rhythmic dissonances for measures
+
+
+def noteRhythmicDissonance(noteElement, timeSigs):
+
