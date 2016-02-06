@@ -1,3 +1,2 @@
-import os
+from music21 import *
 
-current_directory = os.path.dirname(os.path.realpath(__file__))
