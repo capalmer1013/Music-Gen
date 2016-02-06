@@ -1,24 +1,43 @@
 from music21 import *
-tonic = [0, 2, 4]
-supertonnic = [1, 3, 5]
-mediant = [2, 4, 6]
-subdominant = [3, 5, 7]
-dominant = [4, 6, 7]
-submendiant = [5, 7, 1]
-leadingtone = [6, 1, 2]
+import objects
+toneChords = [[0, 2, 4], [1, 3, 5], [2, 4, 6], [3, 5, 7], [4, 6, 1], [5, 7, 2], [6, 1, 3]]
+
+tonic = []
+supertonnic = []
+mediant = []
+subdominant = []
+dominant = []
+submendiant = []
+leadingtone = []
 
 
 def createChordGraph(flatStream):
     chords = flatStream.getElementsByClass(chord.Chord)
     k = flatStream.analyze('key')
-    scaleNotes = k.chord._notes
+    scaleNotes = k.chord.notes
     # k.correlationCoefficient
     listOfChords = []
     for i in chords:
         listOfChords.append(i)
 
     for singleChord in listOfChords:
-        for i in singleChord.pitchNames:
-            
+        listOfRankings = []
+        for chordFunction in toneChords:
+            matchingNotes = objects.rational()
+            for tempPitch in singleChord.pitchNames:
+                for scaleDegree in chordFunction:
+                    if tempPitch == scaleNotes[scaleDegree].name:
+                        if matchingNotes.denominator == -1:
+                            matchingNotes.denominator = 1
+                            matchingNotes.numerator += 1
+                        else:
+                            matchingNotes.denominator += 1
+                            matchingNotes.numerator += 1
+                    else:
+                        matchingNotes.denominator += 1
+            listOfRankings.append(matchingNotes)
+
+
+
 
     return chords
