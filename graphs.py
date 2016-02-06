@@ -41,10 +41,11 @@ def createRhythmGraph(flatStream):
                     column.denominator += 1
 
 
-    for row in adjacencyMatrix:
-        for column in row:
-            print str(column.numerator) + '/' + str(column.denominator)
-        print "-----------------------------------------"
+    # for row in adjacencyMatrix:
+    #     for column in row:
+    #         print str(column.numerator) + '/' + str(column.denominator)
+    #     print "-----------------------------------------"
+    return adjacencyMatrix
 
 
 
