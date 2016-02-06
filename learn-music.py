@@ -1,6 +1,7 @@
 import sys
 import networkx as nx
-import graphs
+import rhythmGraph
+import chordGraph
 import filestream
 import musicAttributes
 from music21 import *
@@ -22,11 +23,11 @@ flatStream = filestream.getFlatStream(filename)
 
 # make rhythm graph
 G = nx.DiGraph()
-rhythmMatrix = graphs.createRhythmGraph(flatStream)
+rhythmMatrix = rhythmGraph.createRhythmGraph(flatStream)
 
 
 # make chord graph
-
+chordMatrix = chordGraph.createChordGraph(flatStream)
 
 # make soprano graph
 
