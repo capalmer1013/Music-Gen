@@ -1,12 +1,45 @@
 from music21 import *
 import musicAttributes
+import objects
 
 # Rhythm graph stuff
 
 
 def createRhythmGraph(flatStream):
+    measureNumbers = []
+    states = []
     dictOfTime = musicAttributes.getTimeSignatures(flatStream)
     dictOfRhythmicDissonances = measureRhythmicDissonance(flatStream, dictOfTime)
+    for i in dictOfRhythmicDissonances:
+        measureNumbers.append(i)
+
+    measureNumbers.sort()
+    # first pass create states
+    for i in measureNumbers:
+        if dictOfRhythmicDissonances[i] not in states:
+            states.append(dictOfRhythmicDissonances[i])
+
+    # second pass create edges
+    # adjacency matrix[exit node][enter node]
+    adjacencyMatrix = [[0 for x in range(len(states))] for x in range(len(states))]
+    for i in range(len(adjacencyMatrix)):
+        for j in range(len(adjacencyMatrix)):
+            adjacencyMatrix[i][j] = objects.rational()
+
+    # should make a square adjacency matrix
+    for i in measureNumbers:
+        if i > 1:
+            previousState = dictOfRhythmicDissonances[i-1]
+            currentState = dictOfRhythmicDissonances[i]
+            if adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator == 0:
+                adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
+            else:
+                adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
+                for column in adjacencyMatrix[states.index(previousState)]:
+                    column.denominator += 1
+
+
+
 
 
 
@@ -50,7 +83,7 @@ def measureRhythmicDissonance(flatStream, timeSigs):
                 measureDissonance = 0
             tempMeasureList[:] = []
             tempMeasureList.append(element)
-            dictOfDissonances[currentMeasure] = measureDissonance
+            dictOfDissonances[currentMeasure-1] = measureDissonance
             # get the next measure started
 
     return dictOfDissonances
