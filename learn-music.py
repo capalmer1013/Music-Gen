@@ -1,4 +1,5 @@
 import sys
+import graphs
 import filestream
 import musicAttributes
 from music21 import *
@@ -18,4 +19,11 @@ filename = bach
 
 flatStream = filestream.getFlatStream(filename)
 
-musicAttributes.getTimeSignatures(flatStream)
+# make rhythm graph
+graphs.createRhythmGraph(flatStream)
+
+# make chord graph
+
+# make soprano graph
+
+# make bass graph
