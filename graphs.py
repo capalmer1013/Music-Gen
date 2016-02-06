@@ -31,15 +31,20 @@ def createRhythmGraph(flatStream):
         if i > 1:
             previousState = dictOfRhythmicDissonances[i-1]
             currentState = dictOfRhythmicDissonances[i]
-            if adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator == 0:
+            if adjacencyMatrix[states.index(previousState)][states.index(currentState)].denominator == -1:
                 adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
+                for column in adjacencyMatrix[states.index(previousState)]:
+                    column.denominator = 1
             else:
                 adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
                 for column in adjacencyMatrix[states.index(previousState)]:
                     column.denominator += 1
 
 
-
+    for row in adjacencyMatrix:
+        for column in row:
+            print str(column.numerator) + '/' + str(column.denominator)
+        print "-----------------------------------------"
 
 
 
