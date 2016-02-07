@@ -9,7 +9,7 @@ def fillRhythmicDissonance(rhythmMatrix, states, timeSignature):
     for i in range(len(listOfRhythmicDissonances)):
         stream1 = stream.Stream()
         stream1.append(timeSignature)
-        maxTries = 5
+        maxTries = 7
         increase = 1
         decrease = .5
         while getMeasuresRhythmicDissonance(stream1) != listOfRhythmicDissonances[i] and maxTries > 0:
@@ -21,8 +21,12 @@ def fillRhythmicDissonance(rhythmMatrix, states, timeSignature):
                 # print 'thing happened' + str(decrease)
                 maxTries -= 1
             elif getMeasuresRhythmicDissonance(stream1) < listOfRhythmicDissonances[i]:
-                tempNote = note.Note('B-4')
-                tempNote.offset = increase
+                if random.randint(0, 8):
+                    tempNote = note.Note('B-4')
+                    tempNote.offset = increase
+                else:
+                    tempNote = note.Note('B-4', type='half')
+                    tempNote.offset = 0
                 increase += 1
                 stream1.append(tempNote)
                 maxTries -= 1

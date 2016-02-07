@@ -25,8 +25,10 @@ outputStream.append(meter.TimeSignature(timeSignature))
 # listOfNotes.chord._notes
 # thats how i wanna get a list of notes cause it's a hackathon
 
+
 outputStream.append(songKey)
 outputStream.append(meter.TimeSignature(timeSignature))
+outputStream.append(tempo.MetronomeMark(number=random.randint(60,120)))
 
 dictOfMeasures = writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature))
 
