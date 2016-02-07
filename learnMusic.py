@@ -24,7 +24,7 @@ flatStream = filestream.getFlatStream(filename)
 # make rhythm graph
 G = nx.DiGraph()
 rhythmMatrix = rhythmGraph.createRhythmGraph(flatStream)
-
+states = rhythmGraph.states
 
 # make chord graph
 chordMatrix = chordGraph.createChordGraph(flatStream)

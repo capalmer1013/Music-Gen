@@ -1,6 +1,7 @@
 from music21 import *
 import random
 import learnMusic
+import writeRhythm
 
 outputStream = stream.Stream()
 
@@ -21,5 +22,9 @@ else:
 # thats how i wanna get a list of notes cause it's a hackathon
 
 outputStream.append(songKey)
-learnMusic.rhythmMatrix
-outputStream.show()
+
+writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states)
+
+#outputStream.show()
+
+

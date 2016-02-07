@@ -3,11 +3,11 @@ import musicAttributes
 import objects
 
 # Rhythm graph stuff
-
+states = []
 
 def createRhythmGraph(flatStream):
     measureNumbers = []
-    states = []
+
     dictOfTime = musicAttributes.getTimeSignatures(flatStream)
     dictOfRhythmicDissonances = measureRhythmicDissonance(flatStream, dictOfTime)
     for i in dictOfRhythmicDissonances:
