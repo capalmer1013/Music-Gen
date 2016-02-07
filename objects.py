@@ -20,17 +20,19 @@ class myNote:
             listOfNoteOffsets.append(element.offset)
         listOfNoteOffsets.sort()
         offsetIndex = listOfNoteOffsets.index(inputNote.offset)
-
+        nextNoteOffset = None
+        closestNote = None
         for i in range(offsetIndex, len(listOfNoteOffsets)):
             if listOfNoteOffsets[i] > inputNote.offset:
                 nextNoteOffset = listOfNoteOffsets[i]
                 break
-        nextOffsetOfNotes = flatStream.getElementsByOffset(nextNoteOffset)
-        nextNote = nextOffsetOfNotes.getElementsByClass(note.Note)
-        closestNote = nextNote[0]
-        for e in nextNote:
-            if interval.notesToGeneric(inputNote, e).undirected < interval.notesToGeneric(closestNote, e).undirected:
-                closestNote = nextNote[e]
+        if nextNoteOffset is not None:
+            nextOffsetOfNotes = flatStream.getElementsByOffset(nextNoteOffset)
+            nextNote = nextOffsetOfNotes.getElementsByClass(note.Note)
+            closestNote = nextNote[0]
+            for e in nextNote:
+                if interval.notesToGeneric(inputNote, e).undirected < interval.notesToGeneric(closestNote, e).undirected:
+                    closestNote = nextNote[e]
 
         notesAtSameOffset = listOfNotes.getElementsByOffset(inputNote.offset)
 
@@ -41,8 +43,13 @@ class myNote:
 
         # for element in notesAtSameOffset:
         #     # figure out the tonality here
-
-        self.nextNoteInterval = interval.notesToGeneric(inputNote, closestNote)
+        if closestNote is not None:
+            self.nextNoteInterval = interval.notesToGeneric(inputNote, closestNote).value
+        else:
+            self.nextNoteInterval = None
         self.currentTonality = lowestNoteElement
         self.currentRhythmicDissonance = inputNote.beatStrength
         self.thisNote = inputNote
+
+    def __eq__(self, other):
+        return self.currentTonality == other.currentTonality and self.currentRhythmicDissonance == other.currentRhythmicDissonance and self.nextNoteInterval == other.nextNoteInterval

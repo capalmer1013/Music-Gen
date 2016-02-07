@@ -16,9 +16,35 @@ chordDegree = {}
 def createNoteGraph(flatStream):
     listOfNotes = flatStream.getElementsByClass(note.Note)
     listofMyNotes = []
-
+    noteStates = []
     for noteElement in listOfNotes:
         listofMyNotes.append(objects.myNote(noteElement, flatStream))
+
+    # create note states
+    for myNote in listofMyNotes:
+        if myNote not in noteStates:
+            noteStates.append(myNote)
+
+    # secind pass create adjacency matrix
+    adjacencyMatrix = [[0 for x in range(len(noteStates))] for x in range(len(noteStates))]
+    # make those adjacency matrix cells rationals
+
+    for i in range(len(adjacencyMatrix)):
+        for j in range(len(adjacencyMatrix)):
+            adjacencyMatrix[i][j] = objects.rational()
+
+    for i in range(1, len(listofMyNotes)):
+        previousState = listofMyNotes[i-1]
+        currentState = listofMyNotes[i]
+        if adjacencyMatrix[noteStates.index(previousState)][noteStates.index(currentState)].denominator == -1:
+            adjacencyMatrix[noteStates.index(previousState)][noteStates.index(currentState)].numerator += 1
+            for column in adjacencyMatrix[noteStates.index(previousState)]:
+                column.denominator = 1
+        else:
+            adjacencyMatrix[noteStates.index(previousState)][noteStates.index(currentState)].numerator += 1
+            for column in adjacencyMatrix[noteStates.index(previousState)]:
+                column.denominator += 1
+    print "balls"
 
 
 def createChordGraph(flatStream):
@@ -59,10 +85,5 @@ def createChordGraph(flatStream):
     for i in range(len(adjacencyMatrix)):
         for j in range(len(adjacencyMatrix)):
             adjacencyMatrix[i][j] = objects.rational()
-
-
-    print "BALLS"
-
-
 
     return chords
