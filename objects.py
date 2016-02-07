@@ -21,17 +21,28 @@ class myNote:
         listOfNoteOffsets.sort()
         offsetIndex = listOfNoteOffsets.index(inputNote.offset)
 
-        for element in listOfNotes:
-            if element.offset == inputNote.offset:
-                notesAtSameOffset.append(element)
+        for i in range(offsetIndex, len(listOfNoteOffsets)):
+            if listOfNoteOffsets[i] > inputNote.offset:
+                nextNoteOffset = listOfNoteOffsets[i]
+                break
+        nextOffsetOfNotes = flatStream.getElementsByOffset(nextNoteOffset)
+        nextNote = nextOffsetOfNotes.getElementsByClass(note.Note)
+        closestNote = nextNote[0]
+        for e in nextNote:
+            if interval.notesToGeneric(inputNote, e).undirected < interval.notesToGeneric(closestNote, e).undirected:
+                closestNote = nextNote[e]
 
-        for element in notesAtSameOffset:
-            # figure out the tonality here
-            
+        notesAtSameOffset = listOfNotes.getElementsByOffset(inputNote.offset)
 
+        lowestNoteElement = notesAtSameOffset[0]
+        for noteElement in notesAtSameOffset:
+            if lowestNoteElement.pitch.frequency > noteElement.pitch.frequency:
+                lowestNoteElement = noteElement
 
+        # for element in notesAtSameOffset:
+        #     # figure out the tonality here
 
-        self.nextNoteInterval
-        self.currentTonality
-        self.currentRhythmicDissonance
+        self.nextNoteInterval = interval.notesToGeneric(inputNote, closestNote)
+        self.currentTonality = lowestNoteElement
+        self.currentRhythmicDissonance = inputNote.beatStrength
         self.thisNote = inputNote

@@ -12,6 +12,15 @@ leadingtone = []
 
 chordDegree = {}
 
+
+def createNoteGraph(flatStream):
+    listOfNotes = flatStream.getElementsByClass(note.Note)
+    listofMyNotes = []
+
+    for noteElement in listOfNotes:
+        listofMyNotes.append(objects.myNote(noteElement, flatStream))
+
+
 def createChordGraph(flatStream):
     chords = flatStream.getElementsByClass(chord.Chord)
     k = flatStream.analyze('key')

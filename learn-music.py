@@ -29,6 +29,7 @@ rhythmMatrix = rhythmGraph.createRhythmGraph(flatStream)
 # make chord graph
 chordMatrix = chordGraph.createChordGraph(flatStream)
 
+noteGraph = chordGraph.createNoteGraph(flatStream)
 # make soprano graph
 
 # make bass graph
