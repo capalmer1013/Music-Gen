@@ -52,4 +52,5 @@ class myNote:
         self.thisNote = inputNote
 
     def __eq__(self, other):
-        return self.currentTonality == other.currentTonality and self.currentRhythmicDissonance == other.currentRhythmicDissonance and self.nextNoteInterval == other.nextNoteInterval
+        # change this to create more or less states
+        return self.currentRhythmicDissonance == other.currentRhythmicDissonance and self.nextNoteInterval == other.nextNoteInterval
