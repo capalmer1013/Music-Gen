@@ -26,8 +26,19 @@ outputStream.append(meter.TimeSignature(timeSignature))
 # thats how i wanna get a list of notes cause it's a hackathon
 
 outputStream.append(songKey)
+outputStream.append(meter.TimeSignature(timeSignature))
 
-listOfNotes = writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature))
+dictOfMeasures = writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature))
+
+listOfMeasures = []
+for keyOfDict in dictOfMeasures:
+    listOfMeasures.append(keyOfDict)
+
+for measureNumber in listOfMeasures:
+    for l in dictOfMeasures[measureNumber]:
+        if type(l) is note.Note:
+            outputStream.append(l)
+
 
 outputStream.show()
 

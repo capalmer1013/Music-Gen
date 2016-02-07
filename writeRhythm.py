@@ -7,37 +7,27 @@ def fillRhythmicDissonance(rhythmMatrix, states, timeSignature):
     dictOfMeasures = {}
 
     for i in range(len(listOfRhythmicDissonances)):
-        measureList = []
-        tempBeatStrength = 1
-        tempNote = note.Note('B-4')
-        measureList.append(tempNote)
-
-        while True:
-
-            stream1 = stream.Stream()
-            stream1.append(timeSignature)
-            for item in measureList:
-                stream1.append(item)
-
-            if getMeasuresRhythmicDissonance(stream1) < listOfRhythmicDissonances[i]*.90:
+        stream1 = stream.Stream()
+        stream1.append(timeSignature)
+        maxTries = 5
+        increase = 1
+        decrease = .5
+        while getMeasuresRhythmicDissonance(stream1) != listOfRhythmicDissonances[i] and maxTries > 0:
+            if getMeasuresRhythmicDissonance(stream1) > listOfRhythmicDissonances[i]:
+                tempNote = note.Note('B-4', type='eighth')
+                tempNote.offset = decrease
+                decrease += 1
+                stream1.append(tempNote)
+                print 'thing happened' + str(decrease)
+                maxTries -= 1
+            elif getMeasuresRhythmicDissonance(stream1) < listOfRhythmicDissonances[i]:
                 tempNote = note.Note('B-4')
-                measureList.append(tempNote)
-                tempBeatStrength = tempBeatStrength * 1.5
-                measureList.append(tempNote)
-            elif getMeasuresRhythmicDissonance(stream1) > listOfRhythmicDissonances[i]*1.10:
-                tempNote = note.Note('B-4')
-                tempNote.offset += 1
-                measureList.append(tempNote)
-                tempBeatStrength = tempBeatStrength * .5
-
-            stream1 = stream.Stream()
-            stream1.append(timeSignature)
-            for item in measureList:
-                stream1.append(item)
-
-            if getMeasuresRhythmicDissonance(stream1) < listOfRhythmicDissonances[i]*.90 or getMeasuresRhythmicDissonance(measureList) > listOfRhythmicDissonances[i]*1.10:
-                break
-        dictOfMeasures[i] = measureList
+                tempNote.offset = increase
+                increase += 1
+                stream1.append(tempNote)
+                maxTries -= 1
+        dictOfMeasures[i] = stream1
+    return dictOfMeasures
 
 
 
