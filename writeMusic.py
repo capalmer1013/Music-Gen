@@ -2,7 +2,7 @@ from music21 import *
 import random
 import learnMusic
 import writeRhythm
-
+import writeNotes
 outputStream = stream.Stream()
 
 keys = {'C': 0, 'C#': 7, 'D': 2, 'E-': -3, 'E': 4, 'F': -1, 'F#': 6, 'G': 1, 'A-': -4, 'A': 3, 'B-': -2, 'B': 5}
@@ -39,6 +39,7 @@ for measureNumber in listOfMeasures:
         if type(l) is note.Note:
             outputStream.append(l)
 
+writeNotes.adjustNotes(outputStream, learnMusic.noteGraph, learnMusic.noteStates, scaleOfNotes.chord._notes)
 
 outputStream.show()
 

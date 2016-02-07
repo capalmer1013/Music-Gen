@@ -18,7 +18,7 @@ def fillRhythmicDissonance(rhythmMatrix, states, timeSignature):
                 tempNote.offset = decrease
                 decrease += 1
                 stream1.append(tempNote)
-                print 'thing happened' + str(decrease)
+                # print 'thing happened' + str(decrease)
                 maxTries -= 1
             elif getMeasuresRhythmicDissonance(stream1) < listOfRhythmicDissonances[i]:
                 tempNote = note.Note('B-4')

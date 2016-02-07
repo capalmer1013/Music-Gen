@@ -46,7 +46,7 @@ def createNoteGraph(flatStream):
             for column in adjacencyMatrix[noteStates.index(previousState)]:
                 column.denominator += 1
 
-    return adjacencyMatrix
+    return adjacencyMatrix, noteStates
 
 
 def createChordGraph(flatStream):

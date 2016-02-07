@@ -29,5 +29,5 @@ states = rhythmGraph.states
 # make chord graph
 chordMatrix = chordGraph.createChordGraph(flatStream)
 
-noteGraph = chordGraph.createNoteGraph(flatStream)
+noteGraph, noteStates = chordGraph.createNoteGraph(flatStream)
 
