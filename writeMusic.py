@@ -28,7 +28,7 @@ outputStream.append(meter.TimeSignature(timeSignature))
 
 outputStream.append(songKey)
 outputStream.append(meter.TimeSignature(timeSignature))
-outputStream.append(tempo.MetronomeMark(number=random.randint(60,120)))
+outputStream.append(tempo.MetronomeMark(number=random.randint(80,120)))
 
 dictOfMeasures = writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature))
 

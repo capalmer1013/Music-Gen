@@ -5,31 +5,32 @@ import random
 def fillRhythmicDissonance(rhythmMatrix, states, timeSignature):
     listOfRhythmicDissonances = createRhythmicProgression(rhythmMatrix, states)
     dictOfMeasures = {}
-
+    offset = .25
     for i in range(len(listOfRhythmicDissonances)):
         stream1 = stream.Stream()
         stream1.append(timeSignature)
         maxTries = 7
         increase = 1
         decrease = .5
-        while getMeasuresRhythmicDissonance(stream1) != listOfRhythmicDissonances[i] and maxTries > 0:
-            if getMeasuresRhythmicDissonance(stream1) > listOfRhythmicDissonances[i]:
-                tempNote = note.Note('B-4', type='eighth')
-                tempNote.offset = decrease
-                decrease += 1
-                stream1.append(tempNote)
-                # print 'thing happened' + str(decrease)
-                maxTries -= 1
-            elif getMeasuresRhythmicDissonance(stream1) < listOfRhythmicDissonances[i]:
+        while getMeasuresRhythmicDissonance(stream1) != listOfRhythmicDissonances[i]+offset and maxTries > 0:
+            if getMeasuresRhythmicDissonance(stream1) > listOfRhythmicDissonances[i]+offset:
                 if random.randint(0, 8):
                     tempNote = note.Note('B-4')
                     tempNote.offset = increase
                 else:
                     tempNote = note.Note('B-4', type='half')
                     tempNote.offset = 0
-                increase += 1
+                decrease += 1
                 stream1.append(tempNote)
                 maxTries -= 1
+            elif getMeasuresRhythmicDissonance(stream1) < listOfRhythmicDissonances[i]+offset:
+                tempNote = note.Note('B-4', type='eighth')
+                tempNote.offset = decrease
+                increase += 1
+                stream1.append(tempNote)
+                # print 'thing happened' + str(decrease)
+                maxTries -= 1
+
         dictOfMeasures[i] = stream1
     return dictOfMeasures
 
