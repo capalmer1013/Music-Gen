@@ -13,18 +13,22 @@ songKey = key.KeySignature(keys[keyIndex[random.randint(0, 11)]])
 
 if random.randint(0, 1) % 2:
     # major
-    listOfNotes = songKey.getScale('major')
+    scaleOfNotes = songKey.getScale('major')
 else:
     # minor
-    listOfNotes = songKey.getScale('minor')
+    scaleOfNotes = songKey.getScale('minor')
+
+timeSignature = random.randint(3, 4)
+timeSignature = str(timeSignature) + '/4'
+outputStream.append(meter.TimeSignature(timeSignature))
 
 # listOfNotes.chord._notes
 # thats how i wanna get a list of notes cause it's a hackathon
 
 outputStream.append(songKey)
 
-writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states)
+listOfNotes = writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature))
 
-#outputStream.show()
+outputStream.show()
 
 
