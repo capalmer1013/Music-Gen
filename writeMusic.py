@@ -3,6 +3,8 @@ import random
 import learnMusic
 import writeRhythm
 import writeNotes
+
+environment.set('musicxmlPath', '/usr/bin/mscore')
 outputStream = stream.Stream()
 
 keys = {'C': 0, 'C#': 7, 'D': 2, 'E-': -3, 'E': 4, 'F': -1, 'F#': 6, 'G': 1, 'A-': -4, 'A': 3, 'B-': -2, 'B': 5}

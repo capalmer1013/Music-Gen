@@ -19,7 +19,7 @@ else:
 
 filename = bach
 
-#flatStream = filestream.getFlatStream(filename)
+# flatStream = filestream.getFlatStream(filename)
 flatStream = filestream.getStream(filename).parts.elements[0].flat
 # make rhythm graph
 G = nx.DiGraph()
