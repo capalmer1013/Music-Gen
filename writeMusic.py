@@ -20,7 +20,8 @@ else:
     # minor
     scaleOfNotes = songKey.getScale('minor')
 
-timeSignature = random.randint(3, 4)
+# timeSignature = random.randint(3, 4)
+timeSignature = 4
 timeSignature = str(timeSignature) + '/4'
 outputStream.append(meter.TimeSignature(timeSignature))
 
@@ -32,19 +33,22 @@ outputStream.append(songKey)
 outputStream.append(meter.TimeSignature(timeSignature))
 outputStream.append(tempo.MetronomeMark(number=random.randint(80,120)))
 
-dictOfMeasures = writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature))
+# dictOfMeasures = writeRhythm.fillRhythmicDissonance(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature))
 
-listOfMeasures = []
-for keyOfDict in dictOfMeasures:
-    listOfMeasures.append(keyOfDict)
+# listOfMeasures = []
+# for keyOfDict in dictOfMeasures:
+#     listOfMeasures.append(keyOfDict)
+#
+# for measureNumber in listOfMeasures:
+#     for l in dictOfMeasures[measureNumber]:
+#         if type(l) is note.Note:
+#             outputStream.append(l)
 
-for measureNumber in listOfMeasures:
-    for l in dictOfMeasures[measureNumber]:
-        if type(l) is note.Note:
-            outputStream.append(l)
+outputStream.append(writeRhythm.createMeasuresOfRhythm(learnMusic.rhythmMatrix, learnMusic.states, meter.TimeSignature(timeSignature)))
 
-writeNotes.adjustNotes(outputStream, learnMusic.noteGraph, learnMusic.noteStates, scaleOfNotes.chord._notes)
-
+writeNotes.adjustNotesNormal(outputStream, learnMusic.noteGraph, learnMusic.noteStates)
+# writeNotes.adjustNotes(outputStream, learnMusic.noteGraph, learnMusic.noteStates, scaleOfNotes.chord._notes)
+outputStream = outputStream.flat
 outputStream.show()
 
 

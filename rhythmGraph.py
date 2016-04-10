@@ -4,7 +4,7 @@ import objects
 
 # Rhythm graph stuff
 states = []
-
+startingStates = {}
 
 def createRhythmGraph(flatStream):
     measureNumbers = []
@@ -14,6 +14,7 @@ def createRhythmGraph(flatStream):
     # dictOfRhythmicDissonances = measureRhythmicDissonance(flatStream, dictOfTime)
 
     dictOfRhythmicDissonances = getRhythmicDissonances(flatStream)
+
     for i in dictOfRhythmicDissonances:
         measureNumbers.append(i)
 
@@ -23,12 +24,11 @@ def createRhythmGraph(flatStream):
     #     if dictOfRhythmicDissonances[i] not in states:
     #         states.append(dictOfRhythmicDissonances[i])
 
-    # create states wow look at that 1 line
     states = getRhythmicStates(flatStream)
 
     # second pass create edges
     # adjacency matrix[exit node][enter node]
-    adjacencyMatrix = [[0 for x in range(len(states))] for x in range(len(states))]
+    adjacencyMatrix = [[0 for x in range(len(states)+1)] for x in range(len(states)+1)]
 
     for i in range(len(adjacencyMatrix)):
         for j in range(len(adjacencyMatrix)):
@@ -37,17 +37,19 @@ def createRhythmGraph(flatStream):
     # should make a square adjacency matrix
     for i in measureNumbers:
         if i > 1:
-            previousState = dictOfRhythmicDissonances[i-1]
-            currentState = dictOfRhythmicDissonances[i]
-            if adjacencyMatrix[states.index(previousState)][states.index(currentState)].denominator == -1:
-                adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
-                for column in adjacencyMatrix[states.index(previousState)]:
-                    column.denominator = 1
-            else:
-                adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
-                for column in adjacencyMatrix[states.index(previousState)]:
-                    column.denominator += 1
-
+            try:
+                previousState = dictOfRhythmicDissonances[i-1]
+                currentState = dictOfRhythmicDissonances[i]
+                if adjacencyMatrix[states.index(previousState)][states.index(currentState)].denominator == -1:
+                    adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
+                    for column in adjacencyMatrix[states.index(previousState)]:
+                        column.denominator = 1
+                else:
+                    adjacencyMatrix[states.index(previousState)][states.index(currentState)].numerator += 1
+                    for column in adjacencyMatrix[states.index(previousState)]:
+                        column.denominator += 1
+            except KeyError:
+                print 'damn a key error fuck it'
 
     # for row in adjacencyMatrix:
     #     for column in row:

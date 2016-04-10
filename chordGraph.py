@@ -17,14 +17,20 @@ def createNoteGraph(flatStream):
     listOfNotes = flatStream.getElementsByClass(note.Note)
     listofMyNotes = []
     noteStates = []
+    # for noteElement in listOfNotes:
+    #     listofMyNotes.append(objects.myNote(noteElement, flatStream))
+
     for noteElement in listOfNotes:
-        listofMyNotes.append(objects.myNote(noteElement, flatStream))
+        listofMyNotes.append(noteElement.nameWithOctave)
 
     # create note states
-    for myNote in listofMyNotes:
-        if myNote not in noteStates:
-            noteStates.append(myNote)
+    # for myNote in listofMyNotes:
+    #     if myNote not in noteStates:
+    #         noteStates.append(myNote)
 
+    for noteElement in listOfNotes:
+        if noteElement.nameWithOctave not in noteStates:
+            noteStates.append(noteElement.nameWithOctave)
     # secind pass create adjacency matrix
     adjacencyMatrix = [[0 for x in range(len(noteStates))] for x in range(len(noteStates))]
 
