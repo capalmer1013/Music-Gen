@@ -5,23 +5,31 @@ import objects
 # Rhythm graph stuff
 states = []
 
+
 def createRhythmGraph(flatStream):
     measureNumbers = []
 
-    dictOfTime = musicAttributes.getTimeSignatures(flatStream)
-    dictOfRhythmicDissonances = measureRhythmicDissonance(flatStream, dictOfTime)
+    # old stuff
+    # dictOfTime = musicAttributes.getTimeSignatures(flatStream)
+    # dictOfRhythmicDissonances = measureRhythmicDissonance(flatStream, dictOfTime)
+
+    dictOfRhythmicDissonances = getRhythmicDissonances(flatStream)
     for i in dictOfRhythmicDissonances:
         measureNumbers.append(i)
 
     measureNumbers.sort()
-    # first pass create states
-    for i in measureNumbers:
-        if dictOfRhythmicDissonances[i] not in states:
-            states.append(dictOfRhythmicDissonances[i])
+    # # first pass create states
+    # for i in measureNumbers:
+    #     if dictOfRhythmicDissonances[i] not in states:
+    #         states.append(dictOfRhythmicDissonances[i])
+
+    # create states wow look at that 1 line
+    states = getRhythmicStates(flatStream)
 
     # second pass create edges
     # adjacency matrix[exit node][enter node]
     adjacencyMatrix = [[0 for x in range(len(states))] for x in range(len(states))]
+
     for i in range(len(adjacencyMatrix)):
         for j in range(len(adjacencyMatrix)):
             adjacencyMatrix[i][j] = objects.rational()
@@ -48,6 +56,39 @@ def createRhythmGraph(flatStream):
     return adjacencyMatrix
 
 
+def getRhythmicDissonances(flatStream):
+    returnDict = {}
+    lastMeasure = 0
+    currentMeasure = []
+    for element in flatStream:
+        if element.measureNumber == lastMeasure:
+            if isinstance(element, note.Note) or isinstance(element, chord.Chord):
+                currentMeasure.append(element.duration.type)
+
+            else:
+                if len(currentMeasure) > 0:
+                    returnDict[lastMeasure] = currentMeasure
+                currentMeasure = []
+
+    return returnDict
+
+
+def getRhythmicStates(flatStream):
+    stateList = []
+    lastMeasure = 0
+    currentMeasure = []
+    for element in flatStream:
+        if element.measureNumber == lastMeasure:
+            if isinstance(element, note.Note) or isinstance(element, chord.Chord):
+                currentMeasure.append(element.duration.type)
+
+            else:
+                if len(currentMeasure) > 0:
+                    if currentMeasure not in stateList:
+                        stateList.append(currentMeasure)
+                currentMeasure = []
+
+    return stateList
 
 def measureRhythmicDissonance(flatStream, timeSigs):
     listOfNotes = []
