@@ -1,10 +1,7 @@
-import sys
 import networkx as nx
 import rhythmGraph
 import chordGraph
 import filestream
-import musicAttributes
-from music21 import *
 
 titanium = "David_Guetta_Feat._Sia_-_Titanium_Piano.xml"
 bach = "Minuet-in-G-Minor.xml"
@@ -19,7 +16,7 @@ else:
     print "learn-music requires exactly 1 filename as an argument"
 '''
 
-filename = clavier
+filename = bach
 
 # flatStream = filestream.getFlatStream(filename)
 flatStream = filestream.getStream(filename).parts.elements[0].flat
