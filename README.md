@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/capalmer1013/Music-Gen.svg?branch=refactor)](https://travis-ci.org/capalmer1013/Music-Gen)
 # Music-Gen
 Music learning and generation with musicXML files
 
