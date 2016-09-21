@@ -7,7 +7,7 @@ install:
     - pip install python-coveralls
 
 script:
-    - coverage run --source=./* --branch writeMusic.py
+    - coverage run --source='.' --branch writeMusic.py
 
 after_success:
     - coveralls
