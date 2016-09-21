@@ -53,6 +53,10 @@ outputStream.append(writeRhythm.createMeasuresOfRhythm(learnMusic.rhythmMatrix, 
 writeNotes.adjustNotesNormal(outputStream, learnMusic.noteGraph, learnMusic.noteStates)
 # writeNotes.adjustNotes(outputStream, learnMusic.noteGraph, learnMusic.noteStates, scaleOfNotes.chord._notes)
 outputStream = outputStream.flat
-outputStream.show()
 
+try:
+    outputStream.show()
+except:
+    # no output. But that's okay
+    pass
 
